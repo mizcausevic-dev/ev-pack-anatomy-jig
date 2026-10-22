@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EV Battery Pack Anatomy Jig: Remotion + React Three Fiber cutaway</title>
+<meta name="description" content="A 34-second procedural cutaway of an EV battery pack under fast-charge load: cold-plate coolant flow, a sliced jelly-roll cell, BMS telemetry, and the HV busbar series path. Built with Remotion and React Three Fiber.">
+<link rel="canonical" href="https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/">
+<meta name="theme-color" content="#111318">
+<meta property="og:type" content="video.other">
+<meta property="og:title" content="EV Battery Pack Anatomy Jig">
+<meta property="og:description" content="34 seconds, 1,020 frames, every pixel a pure function of the frame number. Remotion + React Three Fiber.">
+<meta property="og:url" content="https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/">
+<meta property="og:image" content="https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/media/og.jpg">
+<meta property="og:video" content="https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/media/ev-pack-anatomy-jig.mp4">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/media/og.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "EV Battery Pack Anatomy Jig",
+  "description": "Procedural 34-second cutaway of an EV battery pack under fast-charge load, rendered with Remotion and React Three Fiber. Telemetry values shown are illustrative.",
+  "thumbnailUrl": "https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/media/og.jpg",
+  "contentUrl": "https://mizcausevic-dev.github.io/ev-pack-anatomy-jig/media/ev-pack-anatomy-jig.mp4",
+  "uploadDate": "2026-10-22",
+  "duration": "PT34S",
+  "publisher": {"@type": "Organization", "name": "Kinetic Gain", "url": "https://kineticgain.com"}
+}
+</script>
+<style>
+:root{--ink:#111318;--panel:#171A21;--wire:#3A3F4D;--cyan:#00E5FF;--orange:#FF6B35;--green:#76FF03;--text:#D5D9E2;--dim:#7D8496;
+--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.6;
+background-image:linear-gradient(rgba(58,63,77,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(58,63,77,.14) 1px,transparent 1px);background-size:56px 56px}
+::selection{background:var(--cyan);color:#000}
+a{color:var(--cyan)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header{padding:64px 0 28px}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.32em;color:var(--cyan);text-transform:uppercase}
+h1{font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.02em;margin:16px 0 14px;color:#F2F4F8}
+.lede{max-width:760px;font-size:19px;color:var(--text)}
+.shine{background:linear-gradient(110deg,#F2F4F8 40%,#9ff6ff 50%,#F2F4F8 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite}
+@keyframes shimmer{100%{background-position:-200% center}}
+.player{position:relative;border:1px solid var(--wire);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px -30px rgba(0,229,255,.25)}
+.player video{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px}
+.chip{font-family:var(--mono);font-size:13px;letter-spacing:.08em;background:var(--panel);color:var(--text);border:1px solid var(--wire);border-radius:999px;padding:9px 16px;cursor:pointer;transition:border-color .2s,color .2s,transform .15s}
+.chip:hover,.chip:focus-visible{border-color:var(--cyan);color:#fff;outline:none;transform:translateY(-1px)}
+.chip.active{border-color:var(--cyan);color:var(--cyan)}
+.chip b{color:var(--dim);font-weight:400;margin-right:8px}
+section{padding:56px 0 8px}
+h2{font-size:28px;letter-spacing:-.01em;color:#F2F4F8;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.card{position:relative;background:var(--panel);border:1px solid var(--wire);border-radius:12px;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(0,229,255,.12),transparent 45%)}
+.card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-bottom:1px solid var(--wire)}
+.card .body{padding:16px 18px 18px}
+.card h3{margin:0 0 6px;font-size:17px;color:#F2F4F8}
+.card p{margin:0;font-size:15px;color:var(--text)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;gap:26px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;margin-top:18px}
+.legend span{display:inline-flex;align-items:center;gap:10px}
+.legend i{width:26px;height:3px;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--wire);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--dim);font-weight:400;text-transform:uppercase}
+td:first-child{font-family:var(--mono);color:var(--cyan);white-space:nowrap}
+pre{background:#0B0D11;border:1px solid var(--wire);border-radius:10px;padding:18px;overflow:auto;font-family:var(--mono);font-size:13.5px;color:#C9CED8}
+.note{border-left:3px solid var(--green);padding:10px 16px;background:rgba(118,255,3,.05);font-size:15px}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
+.btn{font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-decoration:none;padding:13px 20px;border-radius:10px;border:1px solid var(--cyan);color:var(--ink);background:var(--cyan);font-weight:600}
+.btn.ghost{background:transparent;color:var(--cyan)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.is-visible{opacity:1;transform:none}
+footer{padding:60px 0 50px;color:var(--dim);font-family:var(--mono);font-size:12px;letter-spacing:.12em}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,::before,::after{transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Remotion × React Three Fiber · Procedural engineering motion</div>
+    <h1><span class="shine">Anatomy of an EV battery pack under fast charge</span></h1>
+    <p class="lede">A 34-second, 1,020-frame cutaway: sealed exterior, ballistic shield lift, serpentine cold-plate flow, a sliced jelly-roll cell with BMS sense traces, and an exploded isometric view of the high-voltage series path closing on the contactors. No keyframe files, no imported models. Every frame is computed from its frame number.</p>
+    <div class="legend" aria-label="Color legend">
+      <span><i style="background:var(--cyan);box-shadow:0 0 8px var(--cyan)"></i>HV busbar</span>
+      <span><i style="background:var(--orange);box-shadow:0 0 8px var(--orange)"></i>Coolant</span>
+      <span><i style="background:var(--green);box-shadow:0 0 8px var(--green)"></i>BMS telemetry</span>
+      <span><i style="background:var(--wire)"></i>Structure</span>
+    </div>
+  </header>
+
+  <div class="player">
+    <video id="v" controls playsinline muted preload="metadata" poster="media/og.jpg">
+      <source src="media/ev-pack-anatomy-jig.mp4" type="video/mp4">
+      Your browser does not support embedded video. <a href="media/ev-pack-anatomy-jig.mp4">Download the MP4</a>.
+    </video>
+  </div>
+  <div class="chips" role="group" aria-label="Jump to shot">
+    <button class="chip" data-t="0"><b>01</b>Exterior</button>
+    <button class="chip" data-t="5.03"><b>02</b>Cutaway</button>
+    <button class="chip" data-t="10.03"><b>03</b>Thermal</button>
+    <button class="chip" data-t="17.03"><b>04</b>Cell macro</button>
+    <button class="chip" data-t="25.03"><b>05</b>Exploded isometric</button>
+  </div>
+
+  <section class="reveal">
+    <h2>Shot map</h2>
+    <table>
+      <thead><tr><th>Frames</th><th>Shot</th><th>What the viewer sees</th></tr></thead>
+      <tbody>
+        <tr><td>0–150</td><td>Exterior</td><td>15° orbital sweep around the sealed, die-cast aluminum frame.</td></tr>
+        <tr><td>151–300</td><td>Mechanical cutaway</td><td>The ballistic shield springs up the +Z axis and drops to wireframe. The camera descends into module group 2.</td></tr>
+        <tr><td>301–510</td><td>Thermal system</td><td>Module 2's cells ghost out. The serpentine extrusion channel lights safety orange, and velocity arrows trace the coolant loop.</td></tr>
+        <tr><td>511–750</td><td>Cell macro</td><td>One cell lifts free, is wedge-cut, and its 32 jelly-roll wraps peel open in a staircase. BMS sense traces light acid green.</td></tr>
+        <tr><td>751–1020</td><td>Exploded isometric</td><td>Log-space dolly-out to a true isometric angle. The cyan busbar front spreads from the series midpoint to both contactor terminals.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="reveal">
+    <h2>Frames from the render</h2>
+    <div class="grid">
+      <article class="card"><img src="media/shot-0075.jpg" alt="Sealed EV battery pack exterior with die-cast frame and HV connector callouts" loading="lazy" width="1920" height="1080"><div class="body"><div class="mono">Frame 75</div><h3>Sealed exterior</h3><p>Shield plate, frame rails and HV connector posts, lit for silhouette.</p></div></article>
+      <article class="card"><img src="media/shot-0420.jpg" alt="Serpentine coolant channel glowing orange with flow direction arrows under ghosted cells" loading="lazy" width="1920" height="1080"><div class="body"><div class="mono">Frame 420</div><h3>Cold-plate coolant loop</h3><p>Arrows are sampled along a precomputed arc-length table, so their speed stays constant through the bends.</p></div></article>
+      <article class="card"><img src="media/shot-0740.jpg" alt="Sectioned cylindrical cell showing cathode, separator and anode jelly-roll layers" loading="lazy" width="1920" height="1080"><div class="body"><div class="mono">Frame 740</div><h3>Jelly-roll section</h3><p>32 open cylinder shells, re-cut every frame, with the outer wraps peeling first.</p></div></article>
+      <article class="card"><img src="media/shot-1010.jpg" alt="Exploded isometric EV battery pack with cyan busbars converging on HV contactors" loading="lazy" width="1920" height="1080"><div class="body"><div class="mono">Frame 1010</div><h3>HV series path</h3><p>Busbar endpoints are recomputed from the exploded module positions on every frame.</p></div></article>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <h2>How it is built</h2>
+    <p>One pure function owns the timeline. The 3D scene and the HTML overlay both read from it, and the callout leader lines project the same 3D points through the same camera math, so labels stay pinned to the geometry while the camera moves.</p>
+<pre>src/timeline.ts   shot table, spherical camera keys (log-lerped radius), sceneAt(frame)
+src/geometry.ts   pack layout, serpentine curve, exploded transforms, HV series chain
+src/Scene.tsx     instanced cells, cold plates, busbars, BMS, hero cell, junction box
+src/Hud.tsx       titles, timeline, projected callouts, telemetry panel</pre>
+    <p class="note">On-screen telemetry (cell voltage, temperatures, state of charge, the 398.4 V pack total) is illustrative and time-compressed. It does not come from any real battery pack.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/mizcausevic-dev/ev-pack-anatomy-jig">View source on GitHub</a>
+      <a class="btn ghost" href="media/ev-pack-anatomy-jig.mp4" download>Download MP4</a>
+    </div>
+  </section>
+
+  <footer>Kinetic Gain · Procedural engineering motion · Built with Remotion 4 and React Three Fiber 9</footer>
+</div>
+<script>
+const v=document.getElementById('v');const chips=[...document.querySelectorAll('.chip')];
+chips.forEach(c=>c.addEventListener('click',()=>{v.currentTime=parseFloat(c.dataset.t);v.play().catch(()=>{});}));
+v.addEventListener('timeupdate',()=>{let i=0;chips.forEach((c,k)=>{if(v.currentTime>=parseFloat(c.dataset.t)-0.05)i=k});chips.forEach((c,k)=>c.classList.toggle('active',k===i));});
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('is-visible')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.card').forEach(card=>card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');}));
+</script>
+</body>
+</html>
